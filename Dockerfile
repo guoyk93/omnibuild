@@ -10,7 +10,7 @@ RUN apt-get update && \
 # su-exec
 
 RUN set -eu && \
-    curl -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c && \
+    curl -sSL -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c && \
     gcc -Wall /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec && \
     chown root:root /usr/local/bin/su-exec && \
     chmod 0755 /usr/local/bin/su-exec && \
