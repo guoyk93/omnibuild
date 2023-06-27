@@ -1,22 +1,15 @@
 #!/bin/bash
 
-if [ -z "${EUID}" ] || [ -z "${EGID}" ]; then
-    echo "ERROR: \$EUID or \$EGID is not set"
-    exit 1
-fi
-
 set -eu
 
-if [ "0" = "${EUID}" ] || [ "0" = "${EGID}" ]; then
-    echo "ERROR: This script must be run as a non-root user"
+# this script must started from root user
+if [ "0" != "$(id -u)" ]; then
+    echo "This script must be run as root"
     exit 1
 fi
 
-if [ "${EUID}" = "${EGID}" ]; then
-    useradd -u "${EUID}" -d /build/home omnibuild
-else
-    groupadd -f -g "${EGID}" omnibuild-group
-    useradd -u "${EUID}" -G "${EGID}" -d /build/home omnibuild
-fi
+# add user and group, this allows root and non-root, and also allows duplicated ids
+groupadd -g "${HOST_GID}" -o omnibuild-group
+useradd -u "${HOST_UID}" -G omnibuild-group -o -M -d /build/home omnibuild-user
 
-exec su-exec "${EUID}:${EGID}" "$@"
+exec su-exec "omnibuild-user:omnibuild-group" "$@"

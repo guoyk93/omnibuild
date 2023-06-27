@@ -14,9 +14,9 @@ A container image for building projects, with file permission and cache handled 
 docker run --rm -ti \
     -v "$(pwd):/build/workspace" \
     -v "${HOME}/.omnibuild/home:/build/home" \
-    -e EUID=$(id -u) -e EGID=$(id -g) \
+    -e HOST_UID=$(id -u) -e HOST_GID=$(id -g) \
     guoyk/omnibuild:latest \
-    bash -c "whoami && id && pwd && echo 'hello world'"
+    bash -c 'whoami && id && pwd && echo "HOME: ${HOME}"'
 ```
 
 ## Credits
