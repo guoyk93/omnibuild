@@ -62,4 +62,6 @@ RUN set -eu && \
 # Entrypoint
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 
+WORKDIR /build/workspace
+
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
