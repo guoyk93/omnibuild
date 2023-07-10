@@ -59,6 +59,19 @@ RUN set -eu && \
     rm -rf jdk.tar.gz && \
     javac -version
 
+# Maven
+
+ENV MAVEN_VERSION '3.8.8'
+
+ENV PATH "/usr/local/maven/bin:${PATH}"
+
+RUN set -eu && \
+    mkdir -p /usr/local/maven && \
+    curl -sSL -o maven.tar.gz "https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" && \
+    tar -C /usr/local/maven --strip-components 1 -xf maven.tar.gz && \
+    rm -rf maven.tar.gz && \
+    mvn -version
+
 # Entrypoint
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 

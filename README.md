@@ -7,6 +7,7 @@ A container image for building projects, with file permission and cache handled 
 * `golang=1.20.x`
 * `nodejs=18.16.1`
 * `jdk=11.0.19+7`
+* `maven=3.8.8`
 
 ## Environment Variables
 
